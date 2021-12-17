@@ -1,14 +1,16 @@
+import { BrowserRouter } from "react-router-dom";
 import { GlobalStyle } from "./AppStyles";
 import { IconStyle } from "./assets/iconfont/iconfont";
-// import "./assets/iconfont/iconfont.css";
+import AppRoutes from "./routes";
 
 function App() {
   return (
-    <div className="App">
+    <BrowserRouter>
       <GlobalStyle />
       <IconStyle />
       <i className="iconfont icon-41"></i>
-    </div>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
 
