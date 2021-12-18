@@ -8,7 +8,6 @@ function App() {
     <BrowserRouter>
       <GlobalStyle />
       <IconStyle />
-      <i className="iconfont icon-41"></i>
       <AppRoutes />
     </BrowserRouter>
   );

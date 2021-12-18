@@ -15,6 +15,14 @@ const routes = [
         path: "recommend",
         element: <Recommend />,
       },
+      {
+        path: "singers",
+        element: <Recommend />,
+      },
+      {
+        path: "rank",
+        element: <Recommend />,
+      },
     ],
   },
 ];
