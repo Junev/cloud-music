@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { Outlet, NavLink } from "react-router-dom";
 import { Top, Nav, NavItem } from "./style";
 
@@ -12,7 +13,7 @@ const Home = () => {
       <Nav>
         <NavLink
           to="/recommend"
-          className={({ isActive }) => (isActive ? "selected" : "")}
+          className={({ isActive }) => classNames([{ selected: isActive }])}
         >
           <NavItem>
             <span>推荐</span>
@@ -20,7 +21,7 @@ const Home = () => {
         </NavLink>
         <NavLink
           to="/singers"
-          className={({ isActive }) => (isActive ? "selected" : "")}
+          className={({ isActive }) => classNames([{ selected: isActive }])}
         >
           <NavItem>
             <span>歌手</span>
@@ -28,7 +29,7 @@ const Home = () => {
         </NavLink>
         <NavLink
           to="/rank"
-          className={({ isActive }) => (isActive ? "selected" : "")}
+          className={({ isActive }) => classNames([{ selected: isActive }])}
         >
           <NavItem>
             <span>排行榜</span>
