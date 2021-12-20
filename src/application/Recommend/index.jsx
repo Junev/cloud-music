@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import Slider from "../../components/slider";
 import RecommendList from "../../components/recommendList";
@@ -23,16 +23,19 @@ const Recommend = () => {
     dispatch(actionCreator.getRecommendList());
   }, [dispatch]);
 
+  const scroll = useRef();
+
   useEffect(() => {
     getBannerDataDispatch();
   }, [getBannerDataDispatch]);
   useEffect(() => {
     getRecommendDataDispatch();
+    scroll.current?.refresh();
   }, [getRecommendDataDispatch]);
 
   return (
     <ScrollWrap>
-      <Scroll className="list">
+      <Scroll className="list" ref={scroll}>
         <div>
           <Slider />
           <RecommendList />

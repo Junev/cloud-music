@@ -3,7 +3,7 @@ import { fromJS } from "immutable";
 
 const defaultState = fromJS({
   bannerList: [],
-  recommendList: [],
+  recommendList: new Array(30).fill({ picUrl: "" }),
 });
 
 const reducer = (state = defaultState, action) => {
