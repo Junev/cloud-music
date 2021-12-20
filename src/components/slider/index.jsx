@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { useSelector } from "react-redux";
 import Swiper, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -6,7 +7,10 @@ import "swiper/css/pagination";
 import { SliderContainer } from "./style";
 
 const Slider = (props) => {
-  const { bannerList } = props;
+  const bannerList = useSelector((state) =>
+    state.getIn(["recommend", "bannerList"])
+  ).toJS();
+
   const [slideSwiper, setSlideSwiper] = useState(null);
 
   useEffect(() => {
@@ -33,13 +37,17 @@ const Slider = (props) => {
     };
   }, [bannerList, slideSwiper]);
 
-  const swiperItems = bannerList.map((c, i) => (
-    <div className="swiper-slide" key={i}>
-      <div className="slider-nav">
-        <img src={c.imageUrl} width="100%" height="100%" alt="推荐" />
-      </div>
-    </div>
-  ));
+  const swiperItems = useMemo(
+    () =>
+      bannerList.map((c, i) => (
+        <div className="swiper-slide" key={i}>
+          <div className="slider-nav">
+            <img src={c.imageUrl} width="100%" height="100%" alt="推荐" />
+          </div>
+        </div>
+      )),
+    [bannerList]
+  );
 
   return (
     <SliderContainer>
@@ -52,4 +60,4 @@ const Slider = (props) => {
   );
 };
 
-export default Slider;
+export default React.memo(Slider);

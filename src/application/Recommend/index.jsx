@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useCallback, useEffect, useMemo } from "react";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import Slider from "../../components/slider";
 import RecommendList from "../../components/recommendList";
 import { ScrollWrap } from "./style";
@@ -14,14 +14,6 @@ const Recommend = () => {
   //   playCount: 17171122,
   //   name: "朴树、许巍、李健、郑钧、老狼、赵雷",
   // }));
-
-  const bannerList = useSelector((state) =>
-    state.getIn(["recommend", "bannerList"])
-  )?.toJS();
-
-  const recommendList = useSelector((state) =>
-    state.getIn(["recommend", "recommendList"])
-  )?.toJS();
 
   const dispatch = useDispatch();
   const getBannerDataDispatch = useCallback(() => {
@@ -42,8 +34,8 @@ const Recommend = () => {
     <ScrollWrap>
       <Scroll className="list">
         <div>
-          <Slider bannerList={bannerList} />
-          <RecommendList recommendList={recommendList} />
+          <Slider />
+          <RecommendList />
         </div>
       </Scroll>
     </ScrollWrap>

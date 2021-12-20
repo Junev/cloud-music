@@ -1,8 +1,12 @@
+import React from "react";
+import { useSelector } from "react-redux";
 import { getCount } from "../../api/utils";
 import { ListWrapper, List, ListItem } from "./style";
 
 const RecommendList = (props) => {
-  const { recommendList } = props;
+  const recommendList = useSelector((state) =>
+    state.getIn(["recommend", "recommendList"])
+  ).toJS();
 
   const listItems = recommendList.map((c, i) => (
     <ListItem key={i}>
@@ -17,7 +21,7 @@ const RecommendList = (props) => {
       <div className="desc">{c.name}</div>
     </ListItem>
   ));
-  console.log(listItems);
+  // console.log(listItems);
   return (
     <ListWrapper>
       <h1 className="title">推荐歌单</h1>
@@ -26,4 +30,4 @@ const RecommendList = (props) => {
   );
 };
 
-export default RecommendList;
+export default React.memo(RecommendList);
