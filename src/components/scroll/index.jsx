@@ -45,25 +45,21 @@ const Scroll = (props, ref) => {
     });
 
     setBScroll(scrollInstance);
-
-    return () => {
-      setBScroll(null);
-    };
   }, [direction, click, bounceTop, bounceBottom]);
 
   useEffect(() => {
     if (refresh && bScroll) {
       bScroll.refresh();
     }
-  }, [refresh, bScroll]);
+  });
 
   useEffect(() => {
     if (onScroll && bScroll) {
       bScroll.on("scroll", (e) => {
         onScroll(e);
       });
-      return bScroll.off("scroll");
     }
+    return bScroll?.off("scroll");
   }, [bScroll, onScroll]);
 
   useEffect(() => {
@@ -73,10 +69,10 @@ const Scroll = (props, ref) => {
           pullUp(e);
         }
       });
-      return () => {
-        bScroll.off("scrollEnd");
-      };
     }
+    return () => {
+      bScroll?.off("scrollEnd");
+    };
   }, [pullUp, bScroll]);
 
   useEffect(() => {
@@ -86,8 +82,8 @@ const Scroll = (props, ref) => {
           pullDown(e);
         }
       });
-      return bScroll.off("touchEnd");
     }
+    return bScroll?.off("touchEnd");
   });
 
   return <ScrollContainer {...props} ref={scrollContainerRef} />;

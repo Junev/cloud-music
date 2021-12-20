@@ -1,9 +1,8 @@
 import { combineReducers } from "redux-immutable";
+import { reducer as recommend } from "../application/Recommend/store";
 
-const reducer = combineReducers({
-  home(state = {}, action) {
-    return state;
-  },
+const rootReducer = combineReducers({
+  recommend,
 });
 
-export default reducer;
+export default rootReducer;

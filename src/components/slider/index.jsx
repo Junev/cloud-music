@@ -7,10 +7,10 @@ import { SliderContainer } from "./style";
 
 const Slider = (props) => {
   const { bannerList } = props;
-  const [slideSwiper, setSlideSwiper] = useState();
+  const [slideSwiper, setSlideSwiper] = useState(null);
 
   useEffect(() => {
-    if (bannerList && !slideSwiper) {
+    if (!slideSwiper && bannerList.length > 0) {
       const newSliderSwiper = new Swiper(".slider-container", {
         // loop: true,
         modules: [Navigation, Pagination, Autoplay],
@@ -28,6 +28,9 @@ const Slider = (props) => {
       });
       setSlideSwiper(newSliderSwiper);
     }
+    return () => {
+      slideSwiper?.destroy();
+    };
   }, [bannerList, slideSwiper]);
 
   const swiperItems = bannerList.map((c, i) => (
