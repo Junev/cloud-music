@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useCallback, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import Slider from "../../components/slider";
 import RecommendList from "../../components/recommendList";
 import { ScrollWrap } from "./style";
@@ -36,10 +36,8 @@ const Recommend = () => {
   return (
     <ScrollWrap>
       <Scroll className="list" ref={scroll}>
-        <div>
-          <Slider />
-          <RecommendList />
-        </div>
+        <Slider />
+        <RecommendList />
       </Scroll>
     </ScrollWrap>
   );

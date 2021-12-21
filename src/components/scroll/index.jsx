@@ -14,6 +14,7 @@ const Scroll = (props, ref) => {
     pullDown = null,
     bounceTop = true,
     bounceBottom = true,
+    children,
   } = props;
 
   const [bScroll, setBScroll] = useState(null);
@@ -31,6 +32,7 @@ const Scroll = (props, ref) => {
   }));
 
   const scrollContainerRef = useRef();
+  const contentRef = useRef();
 
   useEffect(() => {
     const scrollInstance = new BScroll(scrollContainerRef.current, {
@@ -51,7 +53,7 @@ const Scroll = (props, ref) => {
     if (refresh && bScroll) {
       bScroll.refresh();
     }
-  });
+  }, [refresh, bScroll]);
 
   useEffect(() => {
     if (onScroll && bScroll) {
@@ -84,9 +86,31 @@ const Scroll = (props, ref) => {
       });
     }
     return bScroll?.off("touchEnd");
-  });
+  }, [pullDown, bScroll]);
 
-  return <ScrollContainer {...props} ref={scrollContainerRef} />;
+  const contentRO = useRef(null);
+
+  useEffect(() => {
+    const contentNode = contentRef.current;
+    if (!contentRO.current && bScroll) {
+      const newRO = new ResizeObserver((entries) => {
+        if (entries) {
+          bScroll.refresh();
+        }
+      });
+      newRO.observe(contentNode);
+      contentRO.current = newRO;
+    }
+    return () => {
+      contentRO.current?.unobserve(contentNode);
+    };
+  }, [bScroll]);
+
+  return (
+    <ScrollContainer ref={scrollContainerRef}>
+      <div ref={contentRef}>{children}</div>
+    </ScrollContainer>
+  );
 };
 
 export default React.forwardRef(Scroll);
