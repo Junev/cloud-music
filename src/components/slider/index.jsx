@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import { useSelector } from "react-redux";
 import Swiper, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -11,10 +11,11 @@ const Slider = (props) => {
     state.getIn(["recommend", "bannerList"])
   ).toJS();
 
-  const [slideSwiper, setSlideSwiper] = useState(null);
+  const slideSwiper = useRef(null);
 
   useEffect(() => {
-    if (!slideSwiper && bannerList.length > 0) {
+    const slideInstance = slideSwiper.current;
+    if (!slideInstance && bannerList.length > 0) {
       const newSliderSwiper = new Swiper(".slider-container", {
         // loop: true,
         modules: [Navigation, Pagination, Autoplay],
@@ -30,12 +31,12 @@ const Slider = (props) => {
           clickable: true,
         },
       });
-      setSlideSwiper(newSliderSwiper);
+      slideSwiper.current = newSliderSwiper;
     }
     return () => {
-      slideSwiper?.destroy();
+      slideInstance?.destroy();
     };
-  }, [bannerList, slideSwiper]);
+  }, [bannerList]);
 
   const swiperItems = useMemo(
     () =>
