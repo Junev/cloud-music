@@ -5,6 +5,10 @@ import {
 } from "../../../api/request";
 import * as actionTypes from "./constants";
 
+export const changeEnterLoading = (data) => ({
+  type: actionTypes.CHANGE_ENTER_LOADING,
+});
+
 export const changeBannerList = (data) => ({
   type: actionTypes.CHANGE_BANNER,
   data: fromJS(data),
@@ -34,6 +38,7 @@ export const getRecommendList = () => {
           picUrl: `${c.picUrl}?param=300x300`,
         }));
         dispatch(changeRecommendList(list));
+        dispatch(changeEnterLoading());
       })
       .catch(console.error);
   };

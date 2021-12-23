@@ -6,6 +6,8 @@ import { ScrollWrap } from "./style";
 import Scroll from "../../components/scroll";
 import { actionCreator } from "./store";
 import banner from "../../assets/109951164331219056.jpeg";
+import Loading from "../../baseUI/loading";
+import { useSelector } from "react-redux";
 
 const Recommend = () => {
   // const bannerList = new Array(4).fill(0).map((item) => ({ imageUrl: banner }));
@@ -33,11 +35,16 @@ const Recommend = () => {
     scroll.current?.refresh();
   }, [getRecommendDataDispatch]);
 
+  const loading = useSelector((store) =>
+    store.getIn(["recommend", "enterLoading"])
+  );
+
   return (
     <ScrollWrap>
       <Scroll className="list" ref={scroll}>
         <Slider />
         <RecommendList />
+        {loading && <Loading />}
       </Scroll>
     </ScrollWrap>
   );
