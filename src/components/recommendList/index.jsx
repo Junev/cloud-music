@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { getCount } from "../../api/utils";
+import { LazyLoadImages } from "../LazyLoadImages";
 import { ListWrapper, List, ListItem } from "./style";
 
 const RecommendList = (props) => {
@@ -12,7 +13,13 @@ const RecommendList = (props) => {
     <ListItem key={i}>
       <div className="img_wrapper">
         <div className="decorate"></div>
-        <img src={c.picUrl} height="100%" width="100%" alt="music" />
+        <img
+          className="lazyload"
+          data-src={c.picUrl}
+          height="100%"
+          width="100%"
+          alt="music"
+        />
         <div className="play_count">
           <i className="iconfont icon-headset play" />
           <span className="count">{getCount(c.playCount)}</span>
@@ -25,7 +32,9 @@ const RecommendList = (props) => {
   return (
     <ListWrapper>
       <h1 className="title">推荐歌单</h1>
-      <List>{listItems}</List>
+      <LazyLoadImages files={recommendList}>
+        <List>{listItems}</List>
+      </LazyLoadImages>
     </ListWrapper>
   );
 };
