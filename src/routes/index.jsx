@@ -1,6 +1,7 @@
 import { useRoutes, Navigate } from "react-router-dom";
 import Home from "../application/Home";
 import Recommend from "../application/Recommend";
+import Singer from "../application/Singer";
 
 const routes = [
   {
@@ -17,7 +18,7 @@ const routes = [
       },
       {
         path: "singers",
-        element: <Recommend />,
+        element: <Singer />,
       },
       {
         path: "rank",

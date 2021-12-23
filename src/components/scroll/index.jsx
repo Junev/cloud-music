@@ -4,6 +4,10 @@ import { ScrollContainer } from "./style";
 
 const Scroll = (props, ref) => {
   const {
+    viewportCls,
+    viewportStyle,
+    contentCls,
+    contentStyle,
     direction = "vertical",
     click = true,
     refresh = true,
@@ -107,8 +111,14 @@ const Scroll = (props, ref) => {
   }, [bScroll]);
 
   return (
-    <ScrollContainer ref={scrollContainerRef}>
-      <div ref={contentRef}>{children}</div>
+    <ScrollContainer
+      ref={scrollContainerRef}
+      className={viewportCls}
+      style={viewportStyle}
+    >
+      <div ref={contentRef} className={contentCls} style={contentStyle}>
+        {children}
+      </div>
     </ScrollContainer>
   );
 };
