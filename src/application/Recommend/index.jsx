@@ -5,7 +5,7 @@ import RecommendList from "../../components/recommendList";
 import { ScrollWrap } from "./style";
 import Scroll from "../../components/scroll";
 import { actionCreator } from "./store";
-import banner from "../../assets/109951164331219056.jpeg";
+// import banner from "../../assets/109951164331219056.jpeg";
 import Loading from "../../baseUI/loading";
 import { useSelector } from "react-redux";
 

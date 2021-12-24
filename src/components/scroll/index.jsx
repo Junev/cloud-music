@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState, useImperativeHandle } from "react";
 import BScroll from "better-scroll";
-import { ScrollContainer } from "./style";
+import classNames from "classnames";
+import { PullUpLoading, PullDownLoading, ScrollContainer } from "./style";
+import Loading from "../../baseUI/loading";
+import LoadingV2 from "../../baseUI/loading-v2";
 
 const Scroll = (props, ref) => {
   const {
@@ -74,12 +77,15 @@ const Scroll = (props, ref) => {
         if (bScroll.y <= bScroll.maxScrollY + 100) {
           pullUp(e);
         }
+        if (bScroll.y > -100) {
+          pullDown(e);
+        }
       });
     }
     return () => {
       bScroll?.off("scrollEnd");
     };
-  }, [pullUp, bScroll]);
+  }, [pullUp, bScroll, pullDown]);
 
   useEffect(() => {
     if (pullDown && bScroll) {
@@ -119,6 +125,15 @@ const Scroll = (props, ref) => {
       <div ref={contentRef} className={contentCls} style={contentStyle}>
         {children}
       </div>
+
+      <PullUpLoading className={classNames([pullUpLoading ? "show" : "hide"])}>
+        <Loading />
+      </PullUpLoading>
+      <PullDownLoading
+        className={classNames([pullDownLoading ? "show" : "hide"])}
+      >
+        <LoadingV2 />
+      </PullDownLoading>
     </ScrollContainer>
   );
 };

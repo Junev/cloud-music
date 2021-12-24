@@ -53,7 +53,6 @@ const LazyLoadImages: React.FC<Props> = (props) => {
     const lazyImages = Array.prototype.slice.call(imgNodes) as HTMLElement[];
 
     const lazyLoad = () => {
-      console.log(window.scrollY);
       for (let i = 0; i < lazyImages.length; i++) {
         const image = lazyImages[i];
         const { top, bottom } = image.getBoundingClientRect();

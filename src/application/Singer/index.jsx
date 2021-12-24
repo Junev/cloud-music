@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import HorizonItem from "../../baseUI/horizon-item";
-import { alphaTypes, categoryTypes } from "../../api/singerCategory";
+import { LazyLoadImages } from "../../components/LazyLoadImages";
 import Scroll from "../../components/scroll";
+import { alphaTypes, categoryTypes } from "../../api/singerCategory";
 import { ListContainer, List, ListItem, NavContainer } from "./style";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import {
   getHotSingerList,
   changePageCount,
@@ -15,19 +15,23 @@ import {
   loadMoreHotSingerList,
   loadMoreSingerList,
 } from "./store/actionCreator";
-import { LazyLoadImages } from "../../components/LazyLoadImages";
+import Loading from "../../baseUI/loading";
 
-const random = (low, high) => low + (high - low) * Math.random();
+// const random = (low, high) => low + (high - low) * Math.random();
 
 const Singer = (props) => {
   const singersList = useSelector((store) =>
     store.getIn(["singer", "singerList"])
   ).toJS();
 
+  const pageCount = useSelector((store) =>
+    store.getIn(["singer", "pageCount"])
+  );
+
   const enterLoading = useSelector((store) =>
     store.getIn(["singer", "enterLoading"])
   );
-  const pullUplLoading = useSelector((store) =>
+  const pullUpLoading = useSelector((store) =>
     store.getIn(["singer", "pullUploading"])
   );
   const pullDownLoading = useSelector((store) =>
@@ -55,9 +59,9 @@ const Singer = (props) => {
       dispatch(changePullUpLoading(true));
       dispatch(changePageCount(count + 1));
       if (hot) {
-        dispatch(loadMoreHotSingerList({}));
+        dispatch(loadMoreHotSingerList());
       } else {
-        dispatch(loadMoreSingerList({ category, alphabet }));
+        dispatch(loadMoreSingerList(category, alphabet));
       }
     },
     [dispatch]
@@ -99,6 +103,14 @@ const Singer = (props) => {
     [category, selectTag]
   );
 
+  const handlePullDown = useCallback(() => {
+    pullDownRefresh(category, alphabet);
+  }, [pullDownRefresh, category, alphabet]);
+
+  const handlePullUp = useCallback(() => {
+    pullUpRefresh(category, alphabet, category === "", pageCount);
+  }, [pullUpRefresh, category, alphabet, pageCount]);
+
   const singerListItems = singersList.map((c, i) => (
     <ListItem key={c.accountId || i}>
       <div className="img_wrap">
@@ -130,11 +142,17 @@ const Singer = (props) => {
         onClick={updateAlphabet}
       />
       <ListContainer>
-        <Scroll>
+        <Scroll
+          pullDownLoading={pullDownLoading}
+          pullDown={handlePullDown}
+          pullUpLoading={pullUpLoading}
+          pullUp={handlePullUp}
+        >
           <LazyLoadImages files={singersList}>
             <List>{singerListItems}</List>
           </LazyLoadImages>
         </Scroll>
+        {enterLoading && <Loading />}
       </ListContainer>
     </NavContainer>
   );
