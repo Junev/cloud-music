@@ -2,6 +2,7 @@ import { useRoutes, Navigate } from "react-router-dom";
 import Home from "../application/Home";
 import Recommend from "../application/Recommend";
 import Singer from "../application/Singer";
+import Rank from "../application/Rank";
 
 const routes = [
   {
@@ -22,7 +23,7 @@ const routes = [
       },
       {
         path: "rank",
-        element: <Recommend />,
+        element: <Rank />,
       },
     ],
   },
