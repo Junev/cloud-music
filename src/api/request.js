@@ -1,5 +1,18 @@
 import { axiosInstance } from "./config";
+import { categoryMap } from "./singerCategory";
 
 export const getBannerRequest = () => axiosInstance.get("/banner");
 
 export const getRecommendListRequest = () => axiosInstance.get("/personalized");
+
+export const getHotSingerListRequest = (count) =>
+  axiosInstance.get(`/top/artists?offset=${count}`);
+
+export const getSingerListRequest = (category, alpha, count) => {
+  const { type, area } = !!category ? categoryMap.get(category) : {};
+  return axiosInstance.get(
+    `/artist/list?${
+      type && area ? `type=${type}&area=${area}` : ""
+    }&initial=${alpha.toLowerCase()}&offset=${count}`
+  );
+};
