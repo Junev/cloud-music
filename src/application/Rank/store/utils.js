@@ -17,7 +17,7 @@ const findGlobalRankIndex = (rankList) => {
 
   res = find(left, right);
 
-  return res;
+  return res + 1;
 
   // for (let i = rankList.length - 1; i > 0; i--) {
   //   if (!rankList[i].tracks.length && rankList[i - 1].tracks.length) {

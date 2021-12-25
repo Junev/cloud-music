@@ -1,6 +1,9 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRankList } from "./store/actionCreator";
+import Scroll from "../../components/scroll";
+import { Container } from "./style";
+import RankList from "./RankList";
 
 const Rank = () => {
   const officialRankList = useSelector((store) =>
@@ -21,7 +24,21 @@ const Rank = () => {
   useEffect(() => {
     getRank();
   }, [getRank]);
-  return null;
+  return (
+    <Container>
+      <Scroll>
+        <RankList
+          title={<h1 className="title">官方榜</h1>}
+          list={officialRankList}
+        />
+        <RankList
+          title={<h1 className="title">全球榜</h1>}
+          isGlobalRank
+          list={globalRankList}
+        />
+      </Scroll>
+    </Container>
+  );
 };
 
 export default Rank;
