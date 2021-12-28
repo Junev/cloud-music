@@ -1,5 +1,5 @@
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
-import { useEffect, useRef } from "react";
 import Scroll from "../../components/scroll";
 import { List, ListItem } from "./style";
 
@@ -50,4 +50,4 @@ const HorizonItem = (props) => {
   );
 };
 
-export default HorizonItem;
+export default React.memo(HorizonItem);

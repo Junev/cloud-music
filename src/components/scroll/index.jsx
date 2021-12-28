@@ -126,14 +126,14 @@ const Scroll = (props, ref) => {
         {children}
       </div>
 
-      <PullUpLoading className={classNames([pullUpLoading ? "show" : "hide"])}>
+      {/* <PullUpLoading className={classNames([pullUpLoading ? "show" : "hide"])}>
         <Loading />
       </PullUpLoading>
       <PullDownLoading
         className={classNames([pullDownLoading ? "show" : "hide"])}
       >
         <LoadingV2 />
-      </PullDownLoading>
+      </PullDownLoading> */}
     </ScrollContainer>
   );
 };

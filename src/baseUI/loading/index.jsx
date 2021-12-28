@@ -1,6 +1,6 @@
 import { LoadingWrapper } from "./styles";
 
-const Loading = () => {
+const Loading = ({ loading }) => {
   return (
     <LoadingWrapper>
       <div></div>

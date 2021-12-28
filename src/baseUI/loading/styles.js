@@ -10,6 +10,7 @@ const loading = keyframes`
 }
 `;
 const LoadingWrapper = styled.div`
+  visibility: ${(props) => (props.loading ? "visible" : "hidden")};
   > div {
     position: absolute;
     z-index: 1000;
