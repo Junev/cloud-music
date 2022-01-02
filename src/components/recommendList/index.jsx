@@ -1,5 +1,7 @@
 import React from "react";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { getCount } from "../../api/utils";
 import { LazyLoadImages } from "../LazyLoadImages";
 import { ListWrapper, List, ListItem } from "./style";
@@ -9,8 +11,16 @@ const RecommendList = (props) => {
     state.getIn(["recommend", "recommendList"])
   ).toJS();
 
+  const navigate = useNavigate();
+
+  const enterDetail = useCallback(
+    ({ id }) => {
+      navigate(`/recommend/${id}`);
+    },
+    [navigate]
+  );
   const listItems = recommendList.map((c, i) => (
-    <ListItem key={i}>
+    <ListItem key={i} onClick={() => enterDetail(c)}>
       <div className="img_wrapper">
         <div className="decorate"></div>
         <img

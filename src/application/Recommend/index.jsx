@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import Slider from "../../components/slider";
 import RecommendList from "../../components/recommendList";
@@ -8,6 +8,7 @@ import { actionCreator } from "./store";
 // import banner from "../../assets/109951164331219056.jpeg";
 import Loading from "../../baseUI/loading";
 import { useSelector } from "react-redux";
+import { Outlet } from "react-router";
 
 const Recommend = () => {
   // const bannerList = new Array(4).fill(0).map((item) => ({ imageUrl: banner }));
@@ -40,13 +41,16 @@ const Recommend = () => {
   );
 
   return (
-    <ScrollWrap>
-      <Scroll className="list" ref={scroll}>
-        <Slider />
-        <RecommendList />
-        {loading && <Loading />}
-      </Scroll>
-    </ScrollWrap>
+    <div>
+      <ScrollWrap>
+        <Scroll className="list" ref={scroll}>
+          <Slider />
+          <RecommendList />
+          {loading && <Loading />}
+        </Scroll>
+      </ScrollWrap>
+      <Outlet />
+    </div>
   );
 };
 
