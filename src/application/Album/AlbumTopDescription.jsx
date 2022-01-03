@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
 import { TopDescription } from "./style";
-import { currentAlbum } from ".";
 
 const AlbumTopDescription = () => {
+  const currentAlbum = useSelector((store) =>
+    store.getIn(["album", "currentAlbum"])
+  )?.toJS();
   return (
     <TopDescription background={currentAlbum.coverImgUrl}>
       <div className="background">

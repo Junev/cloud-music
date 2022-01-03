@@ -1,7 +1,10 @@
-import { currentAlbum } from ".";
+import { useSelector } from "react-redux";
 import { getCount } from "../../api/utils";
 
 const AlbumListOperation = () => {
+  const currentAlbum = useSelector((store) =>
+    store.getIn(["album", "currentAlbum"])
+  )?.toJS();
   return (
     <div className="operation">
       <div className="play_all">

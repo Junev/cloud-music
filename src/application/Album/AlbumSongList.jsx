@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { currentAlbum } from ".";
+import { useSelector } from "react-redux";
 import { SongItem } from "./style";
 
 const getName = (strArr) =>
@@ -9,6 +9,9 @@ const getName = (strArr) =>
   );
 
 const AlbumSongList = () => {
+  const currentAlbum = useSelector((store) =>
+    store.getIn(["album", "currentAlbum"])
+  )?.toJS();
   const items = useMemo(
     () =>
       currentAlbum.tracks.map((c, i) => (
@@ -22,7 +25,7 @@ const AlbumSongList = () => {
           </div>
         </li>
       )),
-    []
+    [currentAlbum.tracks]
   );
   return <SongItem>{items}</SongItem>;
 };
