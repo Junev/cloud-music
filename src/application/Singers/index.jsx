@@ -16,7 +16,7 @@ import Loading from "../../baseUI/loading";
 
 const Singer = (props) => {
   const enterLoading = useSelector((store) =>
-    store.getIn(["singer", "enterLoading"])
+    store.getIn(["singers", "enterLoading"])
   );
   const dispatch = useDispatch();
 

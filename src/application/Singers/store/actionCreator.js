@@ -47,8 +47,8 @@ export const getHotSingerList = () => (dispatch, getStore) =>
     .catch(console.error);
 
 export const loadMoreHotSingerList = () => (dispatch, getStore) => {
-  const pageCount = getStore().getIn(["singer", "pageCount"]);
-  const singerList = getStore().getIn(["singer", "singerList"]).toJS();
+  const pageCount = getStore().getIn(["singers", "pageCount"]);
+  const singerList = getStore().getIn(["singers", "singerList"]).toJS();
   getHotSingerListRequest(pageCount)
     .then((res) => {
       const newData = res.artists.map((c) => ({
@@ -78,8 +78,8 @@ export const getSingerList = (category, alpha) => (dispatch, getStore) =>
 
 export const loadMoreSingerList =
   (category, alphabet) => (dispatch, getStore) => {
-    const pageCount = getStore().getIn(["singer", "pageCount"]);
-    const singerList = getStore().getIn(["singer", "singerList"]).toJS();
+    const pageCount = getStore().getIn(["singers", "pageCount"]);
+    const singerList = getStore().getIn(["singers", "singerList"]).toJS();
     getSingerListRequest(category, alphabet, pageCount)
       .then((res) => {
         const newData = res.artists.map((c) => ({

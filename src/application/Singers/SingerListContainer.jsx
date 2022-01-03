@@ -16,19 +16,19 @@ import Loading from "../../baseUI/loading";
 
 const SingerList = ({ category, alphabet, loading }) => {
   const singersListIm = useSelector((store) =>
-    store.getIn(["singer", "singerList"])
+    store.getIn(["singers", "singerList"])
   );
 
   const singersList = useMemo(() => singersListIm.toJS(), [singersListIm]);
 
   const pullUpLoading = useSelector((store) =>
-    store.getIn(["singer", "pullUploading"])
+    store.getIn(["singers", "pullUploading"])
   );
   const pullDownLoading = useSelector((store) =>
-    store.getIn(["singer", "pullDownLoading"])
+    store.getIn(["singers", "pullDownLoading"])
   );
   const pageCount = useSelector((store) =>
-    store.getIn(["singer", "pageCount"])
+    store.getIn(["singers", "pageCount"])
   );
 
   const dispatch = useDispatch();
