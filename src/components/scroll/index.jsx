@@ -68,8 +68,8 @@ const Scroll = (props, ref) => {
         onScroll(e);
       });
     }
-    return bScroll?.off("scroll");
-  }, [bScroll, onScroll]);
+    return () => bScroll?.off("scroll");
+  });
 
   useEffect(() => {
     if (pullUp && bScroll) {
@@ -90,6 +90,7 @@ const Scroll = (props, ref) => {
   useEffect(() => {
     if (pullDown && bScroll) {
       bScroll.on("touchEnd", (e) => {
+        console.log("touchend");
         if (e.y > 50) {
           pullDown(e);
         }
