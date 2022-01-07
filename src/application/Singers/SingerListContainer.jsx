@@ -13,6 +13,7 @@ import {
 import { ListContainer, List, ListItem } from "./style";
 import Scroll from "../../components/scroll";
 import Loading from "../../baseUI/loading";
+import { useNavigate } from "react-router";
 
 const SingerList = ({ category, alphabet, loading }) => {
   const singersListIm = useSelector((store) =>
@@ -67,10 +68,18 @@ const SingerList = ({ category, alphabet, loading }) => {
     pullUpRefresh(category, alphabet, category === "", pageCount);
   }, [pullUpRefresh, category, alphabet, pageCount]);
 
+  const navigate = useNavigate();
+  const handleClickSinger = useCallback(
+    (c) => {
+      navigate(`/singers/${c.id}`);
+    },
+    [navigate]
+  );
+
   const singerListItems = useMemo(
     () =>
       singersList.map((c, i) => (
-        <ListItem key={c.accountId}>
+        <ListItem key={c.accountId} onClick={() => handleClickSinger(c)}>
           <div className="img_wrap">
             <img
               className="lazyload"
@@ -84,7 +93,7 @@ const SingerList = ({ category, alphabet, loading }) => {
           <span className="name">{c.name}</span>
         </ListItem>
       )),
-    [singersList]
+    [handleClickSinger, singersList]
   );
 
   return (

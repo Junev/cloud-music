@@ -12,6 +12,8 @@ import AlbumSongList from "./AlbumSongList";
 import style from "../../assets/global-style";
 import { getAlbumList } from "./store/actionCreator";
 import { useParams } from "react-router";
+import ListOperation from "../SongsList/ListOperation";
+import SongsList from "../SongsList";
 
 export const HEADER_HEIGHT = 45;
 
@@ -62,6 +64,8 @@ const Album = () => {
     [currentAlbum.name]
   );
 
+  console.log(currentAlbum);
+
   return (
     <CSSTransition
       nodeRef={ref}
@@ -82,8 +86,10 @@ const Album = () => {
           <AlbumTopDescription />
           <AlbumMenu />
           <SongList>
-            <AlbumListOperation />
-            <AlbumSongList />
+            <SongsList
+              songs={currentAlbum.tracks}
+              subscribedCount={currentAlbum.subscribedCount}
+            />
           </SongList>
         </Scroll>
       </Container>

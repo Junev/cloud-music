@@ -11,6 +11,7 @@ import {
 } from "./store/actionCreator";
 import SingerList from "./SingerListContainer";
 import Loading from "../../baseUI/loading";
+import { Outlet } from "react-router";
 
 // const random = (low, high) => low + (high - low) * Math.random();
 
@@ -75,6 +76,7 @@ const Singer = (props) => {
         <SingerList category={category} alphabet={alphabet} />
         <Loading loading={enterLoading} />
       </ListContainer>
+      <Outlet />
     </NavContainer>
   );
 };
