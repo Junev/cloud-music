@@ -1,18 +1,15 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import Header from "../../baseUI/header";
 import Scroll from "../../components/scroll";
 import AlbumTopDescription from "./AlbumTopDescription";
 import AlbumMenu from "./AlbumMenu";
-import { Container, SongList } from "./style";
-import AlbumListOperation from "./AlbumListOperation";
-import AlbumSongList from "./AlbumSongList";
 import style from "../../assets/global-style";
+import { SongList } from "../SongsList/style";
+import { Container } from "./style";
 import { getAlbumList } from "./store/actionCreator";
-import { useParams } from "react-router";
-import ListOperation from "../SongsList/ListOperation";
 import SongsList from "../SongsList";
 
 export const HEADER_HEIGHT = 45;

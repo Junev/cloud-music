@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { SongItem } from "./style";
+import { SongItem } from "../SongsList/style";
 
 const getName = (strArr) =>
   strArr.reduce(
