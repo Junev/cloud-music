@@ -61,8 +61,6 @@ const Album = () => {
     [currentAlbum.name]
   );
 
-  console.log(currentAlbum);
-
   return (
     <CSSTransition
       nodeRef={ref}

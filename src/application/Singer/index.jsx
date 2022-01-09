@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router";
 import { CSSTransition } from "react-transition-group";
+import { dispatch, useSelector } from "react-redux";
 import {
   BgLayer,
   CollectButton,
@@ -9,15 +10,32 @@ import {
   SongListWrapper,
 } from "./style";
 import Header from "../../baseUI/header";
-import { artist } from "./mock";
 import Scroll from "../../components/scroll";
 import SongsList from "../SongsList";
-import { useCallback } from "react";
 import { HEADER_HEIGHT } from "../Album";
+import { useDispatch } from "react-redux";
+import { getSingerInfo } from "./store/actionCreator";
+import { useParams } from "react-router";
 
 const bgOffset = 5;
 
 const Singer = () => {
+  const dispatch = useDispatch();
+
+  const artist = useSelector((store) =>
+    store.getIn(["singer", "artist"])
+  ).toJS();
+
+  const songs = useSelector((store) =>
+    store.getIn(["singer", "songsOfArtist"])
+  ).toJS();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(getSingerInfo(id));
+  }, [dispatch, id]);
+
   const navigate = useNavigate();
 
   const ref = useRef();
@@ -91,7 +109,10 @@ const Singer = () => {
       onExit={() => navigate("../")}
     >
       <SingerContainer ref={ref}>
-        <Header title={artist.name}></Header>
+        <Header
+          title={artist.name}
+          handleClick={() => setShowStatus(false)}
+        ></Header>
         <ImgWrapper
           ref={(node) => {
             if (node) {
@@ -110,7 +131,7 @@ const Singer = () => {
         <BgLayer ref={bgLayerRef} />
         <SongListWrapper ref={songListWrapperRef}>
           <Scroll ref={scrollRef} onScroll={handleScroll}>
-            <SongsList songs={artist.hotSongs} showDescribe={false} />
+            <SongsList songs={songs} showDescribe={false} />
           </Scroll>
         </SongListWrapper>
       </SingerContainer>
