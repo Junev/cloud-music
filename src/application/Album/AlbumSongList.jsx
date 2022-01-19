@@ -1,12 +1,7 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { SongItem } from "../SongsList/style";
-
-const getName = (strArr) =>
-  strArr.reduce(
-    (pre, cur, i) => (i === 0 ? cur.name : pre + "/" + cur.name),
-    ""
-  );
+import { getName } from "../../api/utils";
 
 const AlbumSongList = () => {
   const currentAlbum = useSelector((store) =>

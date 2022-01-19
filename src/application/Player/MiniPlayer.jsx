@@ -1,0 +1,48 @@
+import { useRef } from "react";
+import { CSSTransition } from "react-transition-group";
+import { getName } from "../../api/utils/index.js";
+import ProgressCircle from "../../baseUI/progress-circle/index.jsx";
+import { MiniPlayerContainer } from "./style.js";
+
+const MiniPlayer = ({ song, fullScreen, toggleFullScreen }) => {
+  let percent = 0.2;
+  const ref = useRef();
+  return (
+    <CSSTransition
+      classNames="mini"
+      nodeRef={ref}
+      in={!fullScreen}
+      timeout={400}
+      onEnter={() => (ref.current.style.cssText = "display: flex;")}
+      onExited={() => (ref.current.style.cssText = "display: none;")}
+    >
+      <MiniPlayerContainer ref={ref} onClick={() => toggleFullScreen(true)}>
+        <div className="icon">
+          <div className="imgWrapper">
+            <img
+              className="play"
+              src={song.al.picUrl + "?param=400x400"}
+              alt="img"
+              width="40"
+              height="40"
+            />
+          </div>
+        </div>
+        <div className="text">
+          <h2 className="name">{song.name}</h2>
+          <p className="desc">{getName(song.ar)}</p>
+        </div>
+        <div className="control">
+          <ProgressCircle radius={32} percent={percent}>
+            <i className="iconfont icon-stop icon-mini"></i>
+          </ProgressCircle>
+        </div>
+        <div className="control">
+          <i className="iconfont icon-liebiao"></i>
+        </div>
+      </MiniPlayerContainer>
+    </CSSTransition>
+  );
+};
+
+export { MiniPlayer };

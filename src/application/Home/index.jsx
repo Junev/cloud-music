@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { Outlet, NavLink } from "react-router-dom";
+import Player from "../Player";
 import { Top, Nav, NavItem } from "./style";
 
 const Home = () => {
@@ -37,6 +38,7 @@ const Home = () => {
         </NavLink>
       </Nav>
       <Outlet />
+      <Player />
     </div>
   );
 };

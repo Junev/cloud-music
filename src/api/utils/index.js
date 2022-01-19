@@ -9,4 +9,10 @@ const getCount = (count) => {
   }
 };
 
-export { getCount };
+const getName = (strArr) =>
+  strArr.reduce(
+    (pre, cur, i) => (i === 0 ? cur.name : pre + "/" + cur.name),
+    ""
+  );
+
+export { getCount, getName };
