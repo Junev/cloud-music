@@ -8,7 +8,7 @@ const getName = (strArr) =>
   );
 
 const SongList = (props) => {
-  const { songs } = props;
+  const { songs, selectItem } = props;
   const items = useMemo(
     () =>
       songs.map((c, i) => (
@@ -24,7 +24,11 @@ const SongList = (props) => {
       )),
     [songs]
   );
-  return <SongItem>{items}</SongItem>;
+  return (
+    <SongItem onClick={(e) => selectItem(e.clientX, e.clientY)}>
+      {items}
+    </SongItem>
+  );
 };
 
 export default SongList;

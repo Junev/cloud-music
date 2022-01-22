@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
-import { dispatch, useSelector } from "react-redux";
 import {
   BgLayer,
   CollectButton,
@@ -13,9 +13,12 @@ import Header from "../../baseUI/header";
 import Scroll from "../../components/scroll";
 import SongsList from "../SongsList";
 import { HEADER_HEIGHT } from "../Album";
-import { useDispatch } from "react-redux";
 import { getSingerInfo } from "./store/actionCreator";
-import { useParams } from "react-router";
+import MusicNode from "../../baseUI/music-note";
+import {
+  changePlayList,
+  changeSequencePlayList,
+} from "../Player/store/actionCreator";
 
 const bgOffset = 5;
 
@@ -99,6 +102,11 @@ const Singer = () => {
     [imgWrapperHeight]
   );
 
+  const musicNoteRef = useRef();
+  const startAnimation = useCallback((x, y) => {
+    musicNoteRef.current.startAnimation(x, y);
+  }, []);
+
   return (
     <CSSTransition
       nodeRef={ref}
@@ -131,9 +139,14 @@ const Singer = () => {
         <BgLayer ref={bgLayerRef} />
         <SongListWrapper ref={songListWrapperRef}>
           <Scroll ref={scrollRef} onScroll={handleScroll}>
-            <SongsList songs={songs} showDescribe={false} />
+            <SongsList
+              songs={songs}
+              showDescribe={false}
+              startAnimation={startAnimation}
+            />
           </Scroll>
         </SongListWrapper>
+        <MusicNode ref={musicNoteRef} />
       </SingerContainer>
     </CSSTransition>
   );
