@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
-import { getName } from "../../api/utils";
+import { formatPlayTime, getName } from "../../api/utils";
 import ProgressBar from "../../baseUI/progress-bar";
+import { playMode } from "./config";
 import {
   NormalPlayerContainer,
   Top,
@@ -30,12 +31,32 @@ const _getPosAndScale = () => {
   };
 };
 
-const NormalPlayer = ({ song, fullScreen, toggleFullScreen }) => {
-  const percent = 0;
-  const onProgressChange = () => {};
-
+const NormalPlayer = ({
+  song,
+  mode,
+  fullScreen,
+  playing,
+  percent,
+  currentTime,
+  duration,
+  clickPlaying,
+  toggleFullScreen,
+  onProgressChange,
+  handlePrev,
+  handleNext,
+  changeMode,
+}) => {
   const ref = useRef();
   const cdWrapperRef = useRef();
+
+  let modeIcon;
+  if (mode === playMode.sequence) {
+    modeIcon = <i className="iconfont icon-shunxubofang" />;
+  } else if (mode === playMode.loop) {
+    modeIcon = <i className="iconfont icon-danquxunhuan1" />;
+  } else {
+    modeIcon = <i className="iconfont icon-suiji" />;
+  }
 
   return (
     <CSSTransition
@@ -132,7 +153,7 @@ const NormalPlayer = ({ song, fullScreen, toggleFullScreen }) => {
           <CDWrapper ref={cdWrapperRef}>
             <div className="cd">
               <img
-                className="image play"
+                className={`image play ${playing ? "" : "pause"}`}
                 src={song.al.picUrl + "?param=400x400"}
                 alt=""
               />
@@ -141,27 +162,37 @@ const NormalPlayer = ({ song, fullScreen, toggleFullScreen }) => {
         </Middle>
         <Bottom className="bottom">
           <ProgressWrapper>
-            <span className="time time-l"></span>
+            <span className="time time-l">{formatPlayTime(currentTime)}</span>
             <div className="progress-bar-wrapper">
-              <ProgressBar percent={percent} percentChange={onProgressChange} />
+              <ProgressBar
+                percent={percent}
+                onProgressChange={onProgressChange}
+              />
             </div>
-            <span className="time time-r"></span>
+            <span className="time time-r">{formatPlayTime(duration)}</span>
           </ProgressWrapper>
           <Operators>
-            <div className="icon i-left">
-              <i className="iconfont">&#xe625;</i>
+            <div className="icon i-left" onClick={changeMode}>
+              {modeIcon}
             </div>
             <div className="icon i-left">
-              <i className="iconfont">&#xe6e1;</i>
+              <i className="iconfont icon-shangyiqu101" onClick={handlePrev} />
             </div>
             <div className="icon i-center">
-              <i className="iconfont">&#xe723;</i>
+              {playing ? (
+                <i
+                  className="iconfont icon-plus-pause"
+                  onClick={clickPlaying}
+                />
+              ) : (
+                <i className="iconfont icon-bofang1" onClick={clickPlaying} />
+              )}
             </div>
             <div className="icon i-right">
-              <i className="iconfont">&#xe718;</i>
+              <i className="iconfont icon-xiayiqu101" onClick={handleNext} />
             </div>
             <div className="icon i-right">
-              <i className="iconfont">&#xe640;</i>
+              <i className="iconfont icon-liebiao" />
             </div>
           </Operators>
         </Bottom>

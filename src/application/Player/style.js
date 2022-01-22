@@ -89,8 +89,8 @@ const MiniPlayerContainer = styled.div`
       height: 16px;
       margin: auto;
     }
-    .icon-play {
-      left: 9px;
+    .icon-zanting1 {
+      padding-left: 2px;
     }
   }
 `;

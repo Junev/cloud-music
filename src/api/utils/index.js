@@ -15,4 +15,27 @@ const getName = (strArr) =>
     ""
   );
 
-export { getCount, getName };
+const getSongUrl = (id) =>
+  `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+
+const formatPlayTime = (interval) => {
+  let time = interval || 0;
+  const minute = (time / 60).toFixed();
+  const second = (time % 60).toFixed().toString().padStart("0");
+  return `${minute}:${second}`;
+};
+
+const getRandom = (low, high) => Math.floor((high - low) * Math.random() + low);
+
+const shuffle = (arr) => {
+  const newArr = arr.map((c) => ({ ...c }));
+  for (let i = 0; i < newArr.length; i++) {
+    const j = getRandom(0, i);
+    const element = newArr[i];
+    newArr[j] = newArr[i];
+    newArr[i] = element;
+  }
+  return newArr;
+};
+
+export { getCount, getName, getSongUrl, formatPlayTime, shuffle };

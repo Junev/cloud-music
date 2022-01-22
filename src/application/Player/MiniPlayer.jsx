@@ -1,12 +1,26 @@
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { CSSTransition } from "react-transition-group";
 import { getName } from "../../api/utils/index.js";
 import ProgressCircle from "../../baseUI/progress-circle/index.jsx";
 import { MiniPlayerContainer } from "./style.js";
 
-const MiniPlayer = ({ song, fullScreen, toggleFullScreen }) => {
-  let percent = 0.2;
+const MiniPlayer = ({
+  song,
+  fullScreen,
+  playing,
+  percent,
+  clickPlaying,
+  toggleFullScreen,
+}) => {
   const ref = useRef();
+
+  const playIcon = useMemo(() => {
+    if (playing) {
+      return <i className="iconfont icon-stop icon-mini" />;
+    }
+    return <i className="iconfont icon-zanting1 icon-mini" />;
+  }, [playing]);
+
   return (
     <CSSTransition
       classNames="mini"
@@ -20,7 +34,7 @@ const MiniPlayer = ({ song, fullScreen, toggleFullScreen }) => {
         <div className="icon">
           <div className="imgWrapper">
             <img
-              className="play"
+              className={`play ${playing ? "" : "pause"}`}
               src={song.al.picUrl + "?param=400x400"}
               alt="img"
               width="40"
@@ -32,9 +46,9 @@ const MiniPlayer = ({ song, fullScreen, toggleFullScreen }) => {
           <h2 className="name">{song.name}</h2>
           <p className="desc">{getName(song.ar)}</p>
         </div>
-        <div className="control">
+        <div className="control" onClick={(e) => clickPlaying(e)}>
           <ProgressCircle radius={32} percent={percent}>
-            <i className="iconfont icon-stop icon-mini"></i>
+            {playIcon}
           </ProgressCircle>
         </div>
         <div className="control">

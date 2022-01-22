@@ -3,6 +3,9 @@ import style from "../../assets/global-style";
 
 const CircleWrapper = styled.div`
   position: relative;
+  svg {
+    vertical-align: middle;
+  }
   circle {
     stroke-width: 8px;
     transform-origin: center;
