@@ -18,7 +18,9 @@ const MusicNote = ({}, ref) => {
 
   useEffect(() => {
     for (let i = 0; i < ICON_NUMBER; i++) {
-      const node = createNode(`<div class="iconfont icon-icon-"></div>`);
+      const node = createNode(
+        `<div class="iconfont icon-icon-" style="display: none; transform: translate3d(0, 0, 0);"></div>`
+      );
 
       node.dataset.index = i;
       iconsStatus.current[i] = false;

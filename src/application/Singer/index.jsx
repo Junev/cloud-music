@@ -104,7 +104,7 @@ const Singer = () => {
 
   const musicNoteRef = useRef();
   const startAnimation = useCallback((x, y) => {
-    musicNoteRef.current.startAnimation(x, y);
+    musicNoteRef.current.startTransition(x, y);
   }, []);
 
   return (
@@ -142,7 +142,8 @@ const Singer = () => {
             <SongsList
               songs={songs}
               showDescribe={false}
-              startAnimation={startAnimation}
+              subscribedCount={11231}
+              startMusicAnimation={startAnimation}
             />
           </Scroll>
         </SongListWrapper>
