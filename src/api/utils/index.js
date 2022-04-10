@@ -15,7 +15,7 @@ const getName = (strArr) =>
     ""
   );
 
-const getSongUrl = (id) =>
+const hackGetSongUrl = (id) =>
   `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 
 const formatPlayTime = (interval) => {
@@ -38,4 +38,4 @@ const shuffle = (arr) => {
   return newArr;
 };
 
-export { getCount, getName, getSongUrl, formatPlayTime, shuffle };
+export { getCount, getName, hackGetSongUrl, formatPlayTime, shuffle };

@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSongUrl, shuffle } from "../../api/utils";
+import { hackGetSongUrl, shuffle } from "../../api/utils";
 import { MiniPlayer } from "./MiniPlayer";
 import NormalPlayer from "./NormalPlayer";
 import Toast from "../../baseUI/toast";
@@ -16,6 +16,7 @@ import {
 } from "./store/actionCreator";
 import { playMode } from "./config";
 import PlayList from "../PlayList";
+import { getSongUrl } from "../../api/request";
 
 const Player = () => {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const Player = () => {
     const newMode = (mode + 1) % 3;
     const sequencePlayList = sequencePlayListIm?.toJS();
     if (newMode === 0) {
-      dispatch(changePlayList());
+      dispatch(changePlayList(sequencePlayList));
       const index = sequencePlayList.findIndex((c) => c.id === currentSong.id);
       dispatch(changeCurrentIndex(index));
     } else if (newMode === 1) {
@@ -114,7 +115,15 @@ const Player = () => {
     if (current?.id) {
       dispatch(changeCurrentSong(current));
       setDuration(currentSong.dt / 1000 || 0);
-      audioRef.current.src = getSongUrl(current.id);
+
+      (async function getMusicUrl() {
+        const { data } = await getSongUrl(current.id);
+        if (data[0].url) {
+          audioRef.current.src = data[0].url;
+        } else {
+          audioRef.current.src = hackGetSongUrl(current.id);
+        }
+      })();
     }
   }, [currentSong.dt, dispatch, playListIm]);
 
@@ -143,6 +152,7 @@ const Player = () => {
 
   const handleNext = useCallback(() => {
     const playList = playListIm.toJS();
+    console.log(playList);
     if (Array.isArray(playList) && playList.length === 0) {
       handleLoop();
       return;
@@ -156,13 +166,16 @@ const Player = () => {
     }
   }, [currentIndex, dispatch, handleLoop, playListIm, playing]);
 
-  const handleEnded = useCallback(() => {
-    if (mode === playMode.loop) {
-      handleLoop();
-    } else {
-      handleNext();
-    }
-  }, [handleLoop, handleNext, mode]);
+  const handleEnded = useCallback(
+    (e) => {
+      if (mode === playMode.loop) {
+        handleLoop();
+      } else {
+        handleNext();
+      }
+    },
+    [handleLoop, handleNext, mode]
+  );
 
   return (
     <div>
