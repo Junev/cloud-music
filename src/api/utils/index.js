@@ -20,8 +20,11 @@ const hackGetSongUrl = (id) =>
 
 const formatPlayTime = (interval) => {
   let time = interval || 0;
-  const minute = (time / 60).toFixed();
-  const second = (time % 60).toFixed().toString().padStart("0");
+  const minute = Math.floor(time / 60).toFixed();
+  const second = Math.floor(time % 60)
+    .toFixed()
+    .toString()
+    .padStart("0");
   return `${minute}:${second}`;
 };
 
