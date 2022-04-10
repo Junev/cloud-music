@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useLayoutEffect } from "react";
 import { ProgressBarWrapper } from "./style";
 
 const ProgressBar = ({ percent, onProgressChange }) => {
@@ -9,12 +9,16 @@ const ProgressBar = ({ percent, onProgressChange }) => {
 
   const setProgress = useCallback(
     (offset) => {
-      progressRef.current.style.cssText = `width: ${offset}px;`;
-      progressButtonRef.current.style.cssText = `transform: translate3d(${offset}px, 0, 0);`;
       onProgressChange(offset / progressBarPositionRef.current.width);
     },
     [onProgressChange]
   );
+
+  useLayoutEffect(() => {
+    const width = percent * progressBarPositionRef.current.width;
+    progressRef.current.style.cssText = `width: ${width}px;`;
+    progressButtonRef.current.style.cssText = `transform: translate3d(${width}px, 0, 0);`;
+  }, [percent]);
 
   const handleTouchStart = useCallback((e) => {
     const startTouch = {
