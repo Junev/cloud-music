@@ -184,6 +184,31 @@ const reducer = (state = defaultState, action) => {
       return state.set("currentIndex", action.data);
     case actionTypes.SET_SHOW_PLAYLIST:
       return state.set("showPlayList", action.data);
+    case actionTypes.DELETE_SONG: {
+      // const { playList, sequencePlayList, currentIndex } = state;
+      const playList = state.get("playList").toJS();
+      const sequencePlayList = state.get("sequencePlayList").toJS();
+      const currentIndex = state.get("currentIndex");
+
+      let newPlayList = playList.slice();
+      let newSequence = sequencePlayList.slice();
+      let newCurrentIndex = currentIndex;
+
+      const indexOfPlayList = newPlayList.findIndex((c) => c === action.data);
+      newPlayList.splice(indexOfPlayList, 1);
+      if (indexOfPlayList < currentIndex) {
+        newCurrentIndex -= 1;
+      }
+
+      const indexOfSequence = newSequence.findIndex((c) => c === action.data);
+      newSequence.splice(indexOfSequence, 1);
+
+      return state.merge({
+        playList: fromJS(newPlayList),
+        sequencePlayList: fromJS(newSequence),
+        currentIndex: fromJS(newCurrentIndex),
+      });
+    }
     default:
       return state;
   }

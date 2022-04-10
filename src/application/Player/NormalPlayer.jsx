@@ -45,6 +45,7 @@ const NormalPlayer = ({
   handlePrev,
   handleNext,
   changeMode,
+  togglePlayList,
 }) => {
   const ref = useRef();
   const cdWrapperRef = useRef();
@@ -58,6 +59,7 @@ const NormalPlayer = ({
     modeIcon = <i className="iconfont icon-suiji" />;
   }
 
+  const handlePlayList = () => togglePlayList(true);
   return (
     <CSSTransition
       classNames="normal"
@@ -192,7 +194,7 @@ const NormalPlayer = ({
               <i className="iconfont icon-xiayiqu101" onClick={handleNext} />
             </div>
             <div className="icon i-right">
-              <i className="iconfont icon-liebiao" />
+              <i className="iconfont icon-liebiao" onClick={handlePlayList} />
             </div>
           </Operators>
         </Bottom>

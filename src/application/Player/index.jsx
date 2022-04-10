@@ -12,8 +12,10 @@ import {
   changePlayList,
   changePlayMode,
   changeSequencePlayList,
+  changeShowPlayList,
 } from "./store/actionCreator";
 import { playMode } from "./config";
+import PlayList from "../PlayList";
 
 const Player = () => {
   const dispatch = useDispatch();
@@ -45,6 +47,11 @@ const Player = () => {
     (isFullScreen) => {
       dispatch(changeFullScreen(isFullScreen));
     },
+    [dispatch]
+  );
+
+  const togglePlayList = useCallback(
+    (visible) => dispatch(changeShowPlayList(visible)),
     [dispatch]
   );
 
@@ -166,6 +173,7 @@ const Player = () => {
         fullScreen={fullScreen}
         toggleFullScreen={toggleFullScreen}
         clickPlaying={clickPlaying}
+        togglePlayList={togglePlayList}
       />
       <NormalPlayer
         song={currentSong}
@@ -181,6 +189,7 @@ const Player = () => {
         handlePrev={handlePrev}
         handleNext={handleNext}
         changeMode={changeMode}
+        togglePlayList={togglePlayList}
       />
       <audio
         ref={audioRef}
@@ -188,6 +197,7 @@ const Player = () => {
         onEnded={handleEnded}
       />
       <Toast ref={toastRef}>{modeText}</Toast>
+      <PlayList changeMode={changeMode} />
     </div>
   );
 };

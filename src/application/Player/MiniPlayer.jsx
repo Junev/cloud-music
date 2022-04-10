@@ -11,6 +11,7 @@ const MiniPlayer = ({
   percent,
   clickPlaying,
   toggleFullScreen,
+  togglePlayList,
 }) => {
   const ref = useRef();
 
@@ -20,6 +21,11 @@ const MiniPlayer = ({
     }
     return <i className="iconfont icon-zanting1 icon-mini" />;
   }, [playing]);
+
+  const handlePlayList = (e) => {
+    e.stopPropagation();
+    togglePlayList(true);
+  };
 
   return (
     <CSSTransition
@@ -51,7 +57,7 @@ const MiniPlayer = ({
             {playIcon}
           </ProgressCircle>
         </div>
-        <div className="control">
+        <div className="control" onClick={handlePlayList}>
           <i className="iconfont icon-liebiao"></i>
         </div>
       </MiniPlayerContainer>
