@@ -27,4 +27,5 @@ export const getSingerInfoRequest = (id) =>
 
 export const checkMusic = (id) => axiosInstance.get(`/check/music?id={id}`);
 
+// https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=%e8%8e%b7%e5%8f%96%e9%9f%b3%e4%b9%90-url
 export const getSongUrl = (id) => axiosInstance.get(`/song/url?id=${id}`);

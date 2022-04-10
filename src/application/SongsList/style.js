@@ -65,7 +65,7 @@ const SongList = styled.div`
   }
 `;
 
-const SongItem = styled.ul`
+const SongItemList = styled.ul`
   > li {
     display: flex;
     height: 60px;
@@ -101,4 +101,4 @@ const SongItem = styled.ul`
   }
 `;
 
-export { SongList, SongItem };
+export { SongList, SongItemList };

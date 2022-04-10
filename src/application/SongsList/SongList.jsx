@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { SongItem } from "./style";
+import { SongItemList } from "./style";
 
 const getName = (strArr) =>
   strArr.reduce(
@@ -25,9 +25,9 @@ const SongList = (props) => {
     [songs]
   );
   return (
-    <SongItem onClick={(e) => selectItem(e.clientX, e.clientY)}>
+    <SongItemList onClick={(e) => selectItem(e.clientX, e.clientY)}>
       {items}
-    </SongItem>
+    </SongItemList>
   );
 };
 
