@@ -69,11 +69,11 @@ const Player = () => {
   const changeMode = useCallback(() => {
     const newMode = (mode + 1) % 3;
     const sequencePlayList = sequencePlayListIm?.toJS();
-    if (newMode === 0) {
+    if (newMode === playMode.sequence) {
       dispatch(changePlayList(sequencePlayList));
       const index = sequencePlayList.findIndex((c) => c.id === currentSong.id);
       dispatch(changeCurrentIndex(index));
-    } else if (newMode === 1) {
+    } else if (newMode === playMode.loop) {
       dispatch(changePlayList(sequencePlayList));
     } else {
       const newPlayList = shuffle(sequencePlayList);
@@ -152,7 +152,6 @@ const Player = () => {
 
   const handleNext = useCallback(() => {
     const playList = playListIm.toJS();
-    console.log(playList);
     if (Array.isArray(playList) && playList.length === 0) {
       handleLoop();
       return;
