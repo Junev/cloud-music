@@ -3,6 +3,7 @@ import style from "../../assets/global-style";
 
 const ListWrapper = styled.div`
   max-width: 100%;
+  padding-bottom: 60px;
   .title {
     font-size: 14px;
     font-weight: 700;

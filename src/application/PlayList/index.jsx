@@ -38,27 +38,6 @@ const PlayList = ({ changeMode }) => {
     dispatch(changeShowPlayList(false));
   }, [dispatch]);
 
-  const changeCurrentIndex = useCallback(
-    (index) => {
-      dispatch(changeCurrentIndex(index));
-    },
-    [dispatch]
-  );
-
-  const changePlayMode = useCallback(
-    (mode) => {
-      dispatch(changePlayMode(mode));
-    },
-    [dispatch]
-  );
-
-  const changePlayList = useCallback(
-    (list) => {
-      dispatch(changePlayList(list));
-    },
-    [dispatch]
-  );
-
   const playlistRef = useRef();
   const onEnter = useCallback(() => {}, []);
   const onEntering = useCallback(() => {}, []);

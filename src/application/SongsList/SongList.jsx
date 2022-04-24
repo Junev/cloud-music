@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { SongItemList } from "./style";
 
 const getName = (strArr) =>
@@ -7,7 +7,7 @@ const getName = (strArr) =>
     ""
   );
 
-const SongList = (props) => {
+const SongList = (props, ref) => {
   const { songs, selectItem } = props;
   const items = useMemo(
     () =>
@@ -25,10 +25,10 @@ const SongList = (props) => {
     [songs]
   );
   return (
-    <SongItemList onClick={(e) => selectItem(e.clientX, e.clientY)}>
+    <SongItemList ref={ref} onClick={(e) => selectItem(e.clientX, e.clientY)}>
       {items}
     </SongItemList>
   );
 };
 
-export default SongList;
+export default React.forwardRef(SongList);

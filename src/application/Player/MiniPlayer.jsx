@@ -1,11 +1,11 @@
 import { useRef, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { getName } from "../../api/utils/index.js";
 import ProgressCircle from "../../baseUI/progress-circle/index.jsx";
 import { MiniPlayerContainer } from "./style.js";
 
 const MiniPlayer = ({
-  song,
   fullScreen,
   playing,
   percent,
@@ -13,6 +13,9 @@ const MiniPlayer = ({
   toggleFullScreen,
   togglePlayList,
 }) => {
+  const song = useSelector((store) =>
+    store.getIn(["player", "currentSong"])
+  ).toJS();
   const ref = useRef();
 
   const playIcon = useMemo(() => {

@@ -6,12 +6,10 @@ import NormalPlayer from "./NormalPlayer";
 import Toast from "../../baseUI/toast";
 import {
   changeCurrentIndex,
-  changeCurrentSong,
   changeFullScreen,
   changePlayingState,
   changePlayList,
   changePlayMode,
-  changeSequencePlayList,
   changeShowPlayList,
 } from "./store/actionCreator";
 import { playMode } from "./config";
@@ -37,9 +35,9 @@ const Player = () => {
   const currentIndex = useSelector((store) =>
     store.getIn(["player", "currentIndex"])
   );
-  const currentSong = useSelector((store) =>
+  const currentSongIm = useSelector((store) =>
     store.getIn(["player", "currentSong"])
-  )?.toJS();
+  );
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
@@ -67,6 +65,7 @@ const Player = () => {
   }
 
   const changeMode = useCallback(() => {
+    const currentSong = currentSongIm.toJS();
     const newMode = (mode + 1) % 3;
     const sequencePlayList = sequencePlayListIm?.toJS();
     if (newMode === playMode.sequence) {
@@ -83,7 +82,7 @@ const Player = () => {
     }
     dispatch(changePlayMode(newMode));
     // toastRef.current.show();
-  }, [currentSong.id, dispatch, mode, sequencePlayListIm]);
+  }, [currentSongIm, dispatch, mode, sequencePlayListIm]);
 
   const clickPlaying = useCallback(
     (e) => {
@@ -111,21 +110,22 @@ const Player = () => {
   );
 
   useEffect(() => {
-    const current = playListIm?.toJS()[0];
-    if (current?.id) {
-      dispatch(changeCurrentSong(current));
+    const currentSong = currentSongIm.toJS();
+    if (currentSong?.id) {
       setDuration(currentSong.dt / 1000 || 0);
 
       (async function getMusicUrl() {
-        const { data } = await getSongUrl(current.id);
+        const { data } = await getSongUrl(currentSong.id);
+        audioRef.current.pause();
         if (data[0].url) {
           audioRef.current.src = data[0].url;
         } else {
-          audioRef.current.src = hackGetSongUrl(current.id);
+          audioRef.current.src = hackGetSongUrl(currentSong.id);
         }
+        audioRef.current.play();
       })();
     }
-  }, [currentSong.dt, dispatch, playListIm]);
+  }, [currentSongIm]);
 
   const handleLoop = useCallback(() => {
     audioRef.current.currentTime = 0;
@@ -158,7 +158,9 @@ const Player = () => {
     }
 
     dispatch(
-      changeCurrentIndex(currentIndex < playList.length ? currentIndex + 1 : 0)
+      changeCurrentIndex(
+        currentIndex < playList.length - 1 ? currentIndex + 1 : 0
+      )
     );
     if (!playing) {
       changePlayingState(true);
@@ -179,7 +181,6 @@ const Player = () => {
   return (
     <div>
       <MiniPlayer
-        song={currentSong}
         percent={percent}
         playing={playing}
         fullScreen={fullScreen}
@@ -188,7 +189,6 @@ const Player = () => {
         togglePlayList={togglePlayList}
       />
       <NormalPlayer
-        song={currentSong}
         percent={percent}
         currentTime={currentTime}
         duration={duration}

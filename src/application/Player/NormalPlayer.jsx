@@ -1,4 +1,5 @@
 import { useCallback, useRef } from "react";
+import { useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { formatPlayTime, getName } from "../../api/utils";
 import ProgressBar from "../../baseUI/progress-bar";
@@ -32,7 +33,6 @@ const _getPosAndScale = () => {
 };
 
 const NormalPlayer = ({
-  song,
   mode,
   fullScreen,
   playing,
@@ -49,6 +49,10 @@ const NormalPlayer = ({
 }) => {
   const ref = useRef();
   const cdWrapperRef = useRef();
+
+  const song = useSelector((store) =>
+    store.getIn(["player", "currentSong"])
+  ).toJS();
 
   let modeIcon;
   if (mode === playMode.sequence) {

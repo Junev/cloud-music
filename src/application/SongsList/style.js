@@ -70,6 +70,14 @@ const SongItemList = styled.ul`
     display: flex;
     height: 60px;
     align-items: center;
+
+    &:focus,
+    &:active {
+      background-color: #f0f0f0;
+      .index {
+        color: ${style["theme-color"]};
+      }
+    }
     .index {
       flex-basis: 60px;
       width: 60px;

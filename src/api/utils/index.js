@@ -41,4 +41,42 @@ const shuffle = (arr) => {
   return newArr;
 };
 
-export { getCount, getName, hackGetSongUrl, formatPlayTime, shuffle };
+/**
+ *
+ * @param {string|HTMLELEMENT} container
+ * @param {string} target
+ * @param {function} listener
+ */
+const delegate = (container, target, listener) => {
+  let containerDOM;
+  if (typeof container === "string") {
+    containerDOM = document.querySelector(container);
+  }
+  containerDOM = container;
+
+  const wrappedListener = (e) => {
+    const result = findTarget(e.target);
+    if (result) {
+      const index = [...result.parentNode.children].findIndex(
+        (c) => c === result
+      );
+      listener(e, index);
+    }
+
+    function findTarget(node) {
+      if (!containerDOM.contains(node)) return;
+
+      if (node.matches(target)) {
+        return node;
+      } else {
+        return findTarget(node.parentNode);
+      }
+    }
+  };
+  document.addEventListener("click", wrappedListener);
+  return () => {
+    document.removeEventListener("click", wrappedListener);
+  };
+};
+
+export { getCount, getName, hackGetSongUrl, formatPlayTime, shuffle, delegate };
