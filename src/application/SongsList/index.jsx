@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
+  changeCurrentIndex,
   changePlayList,
   changeSequencePlayList,
 } from "../Player/store/actionCreator";
@@ -26,12 +27,12 @@ const SongsList = (props) => {
   useEffect(() => {
     const ulDOM = ulDOMRef.current;
     const unlisten = delegate(ulDOM, "li", function click(e, i) {
-      console.log(e, i);
+      dispatch(changeCurrentIndex(i));
     });
     return () => {
       unlisten();
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <SongList>
