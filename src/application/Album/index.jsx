@@ -11,6 +11,7 @@ import { SongList } from "../SongsList/style";
 import { Container } from "./style";
 import { getAlbumList } from "./store/actionCreator";
 import SongsList from "../SongsList";
+import MusicNode from "../../baseUI/music-note";
 
 export const HEADER_HEIGHT = 45;
 
@@ -61,6 +62,11 @@ const Album = () => {
     [currentAlbum.name]
   );
 
+  const musicNodeRef = useRef();
+  const startAnimation = useCallback((x, y) => {
+    musicNodeRef.current.startTransition(x, y);
+  }, []);
+
   return (
     <CSSTransition
       nodeRef={ref}
@@ -84,8 +90,10 @@ const Album = () => {
             <SongsList
               songs={currentAlbum.tracks}
               subscribedCount={currentAlbum.subscribedCount}
+              startMusicAnimation={startAnimation}
             />
           </SongList>
+          <MusicNode ref={musicNodeRef} />
         </Scroll>
       </Container>
     </CSSTransition>
